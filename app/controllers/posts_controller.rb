@@ -35,7 +35,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(params[:post])
+    @post = Post.new(params[:post].permit(:user_id, :title, :content))
     @post.user_id = session[:user_id]
     @post.save
     redirect_to post_path(@post.id)

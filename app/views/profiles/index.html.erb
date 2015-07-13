@@ -4,7 +4,7 @@
 
 	<div class='corner'>
 		<% if @user != "Not logged in" %>
-			<%= link_to @user.username, '/profile.#{@myprofile}' , class: 'boxes' %> <!-- "/users/#{@myprofile}/profiles" -->
+			<%= link_to @user.username, '/users/#{@myprofile}/profiles' , class: 'boxes' %> <!-- "/users/#{@myprofile}/profiles" -->
 			<%= link_to "Log Out", '/logout', class: 'boxes' %>
 		<% else %>
 			<%= link_to "Sign Up", new_user_path, class: 'boxes' %>
@@ -12,7 +12,8 @@
 		<% end %>
 	</div>
 
-	<%if which_person(@user) ? @user.id == @other.to_i : @user2.id == @other.to_i %>
+	
+	<% if @user.id == @other.to_i %>
 		<% if @user.profile != nil %>	 <!-- Logged in person looking at their own profile && they have a profile -->
 			
 			<div id="leftSide">
@@ -71,7 +72,7 @@
 		  	  <%=f.submit :"Post It", :id => "postIt" %>
 		  	<% end %>
 		  </div>	
-		<% end %>
+		<% end %>		
 	<% else %> 
 		<% if present_check(@profile) %>	<!-- Logged in NOT looking at their own profile && other person has profile --> 
 			<div id="leftSide">
@@ -81,7 +82,7 @@
 				<div id="picSpot"><%= image_tag @profile.image.url(:medium) %></div>
 				<div id="nameWrap">
 					<div id="nameMe">
-						<h2><%= @person.profile.name.capitalize %></h2>
+						<h2><%= which_person(@person) ? @person.profile.name.capitalize : @person2.profile.name.capitalize %></h2>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 						quis nostrud exercitation ullamco.  
