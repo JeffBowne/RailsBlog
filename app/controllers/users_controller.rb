@@ -10,9 +10,14 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(params[:user].permit(:username, :password))
-    session[:user_id] = @user.id
-    redirect_to '/'
+    @user = User.new(user_params)
+    if @user.valid?
+      @user = User.create(user_params)
+      session[:user_id] = @user.id
+      redirect_to '/'
+    else
+      render '/users/new'
+    end
   end
 
   def edit
@@ -26,6 +31,6 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:username, :password_digest)
+    params.require(:user).permit(:username, :password)
   end
 end

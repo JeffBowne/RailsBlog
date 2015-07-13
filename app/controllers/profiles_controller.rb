@@ -4,11 +4,14 @@ class ProfilesController < ApplicationController
     if session[:user_id] != nil
       @user = User.find(session[:user_id]) 
     else 
-      @user = User.find(3)
+      @user = User.find(3) # a piece of duct tape
     end
-    # @person = User.find_by(id: params[:format])
     @person = User.find_by(id: params[:user_id])
-    @post = @person.posts
+    if @person.posts != nil 
+      @post = @person.posts
+    else
+      @post = []
+    end
   
     @profile = Profile.find_by(params[:id])
   end
@@ -26,11 +29,15 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    @user = User.find(session[:user_id])
-    @profile = Profile.new(params[:new_profile].permit(:name, :email, :city))
-    @profile.user_id = @user.id
-    @profile.save
-    redirect_to user_profiles_path(@user)
+    @profile = Profile.new(new_profile_params)
+    if @profile.valid?
+      @user = User.find(session[:user_id])
+      @profile.user_id = @user.id
+      @profile.save
+      redirect_to user_profiles_path 
+    else 
+      redirect_to user_profiles_path
+    end
   end
 
   def edit

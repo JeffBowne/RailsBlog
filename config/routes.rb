@@ -1,44 +1,10 @@
 Rails.application.routes.draw do
-  
-
-  # get 'comments/new'
-
-  # get 'comments/create'
-
-  # get 'comments/destroy'
-
-  # get 'users/index'
-
-  # get 'users/show'
-
-  # get 'users/new'
-
-  # get 'users/create'
-
-  # get 'users/edit'
-
-  # get 'users/update'
-
-  # get 'users/destroy'
-
-  # get 'profiles/index'
-
-  # get 'profiles/show'
-
-  # get 'profiles/new'
-
-  # get 'profiles/create'
-
-  # get 'profiles/edit'
-
-  # get 'profiles/update'
-
-  # get 'profiles/destroy'
 
 get '/login' => 'home#login'
 post '/login' => 'home#login_process'
 get '/logout' => 'home#logout'
 get '/profile' => 'profiles#index'
+get '/myprofile' => 'profile#index'
 get '/new_profile' => 'profiles#new'
 post '/new_profile' => 'profiles#create'
 

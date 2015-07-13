@@ -4,7 +4,7 @@
 
 	<div class='corner'>
 		<% if @user != "Not logged in" %>
-			<%= link_to @user.username, '/users/#{@myprofile}/profiles' , class: 'boxes' %> <!-- "/users/#{@myprofile}/profiles" -->
+			<%= link_to @user.username, user_profiles_path , class: 'boxes' %> <!-- "/users/#{@myprofile}/profiles" -->
 			<%= link_to "Log Out", '/logout', class: 'boxes' %>
 		<% else %>
 			<%= link_to "Sign Up", new_user_path, class: 'boxes' %>
@@ -51,19 +51,21 @@
 					</div>
 				</div>
 				<div id="myPosts">
-					<% @post.each do |post| %>
+					<% if !@post.nil? %>
+						<% @post.each do |post| %>
 						<ul>
 							<li>
 								<h6><%= post.title %></h6>
 								<p><%= post.content %></p>
 							</li>
 						</ul>
+						<% end %>
 					<% end %>
 				</div>
 			</div>			
 		<% else %> <!-- Logged in person looking at their own profile && they do NOT have a profile -->
 		  <div id="formProfile" class="form">	
-			<%= form_for 'new_profile', url: '/new_profile', html: { class:'newprofile', multipart: true } do |f| %>
+			<%= form_for 'new_profile', url: user_profiles_path, html: { class:'newprofile', multipart: true } do |f| %>
 			  <%=f.label :"New Profile" %><br />
 			  <%=f.text_area :name, :placeholder => "Name" %>
 			  <%=f.text_area :email, :placeholder => "Email" %>
@@ -71,8 +73,16 @@
 			  <%= f.file_field :image %>
 		  	  <%=f.submit :"Post It", :id => "postIt" %>
 		  	<% end %>
+
+		  	<% if !@user.nil? && @user.errors.full_messages.any? %>
+		  		<% @user.errors.full_messages.each do |err| %>
+		  			<ul>
+		  				<li><%= err %></li>
+		  			</ul>
+	  			<% end %>
+  			<% end %>
 		  </div>	
-		<% end %>		
+	  <% end %>		
 	<% else %> 
 		<% if present_check(@profile) %>	<!-- Logged in NOT looking at their own profile && other person has profile --> 
 			<div id="leftSide">
