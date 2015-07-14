@@ -6,7 +6,7 @@ class Profile < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true, length: { minimum: 2, maximum: 100 }
   validates :city, presence: true, length: { minimum: 2, maximum: 30 }
   
-  before_create :nicefact
+  before_create :nicefact # this is the hook, but where does it show up?
 
   def nicefact
     puts "You have a great day!"

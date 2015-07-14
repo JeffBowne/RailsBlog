@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module Railsblog
   class Application < Rails::Application
 
+    config.assets.initialize_on_precompile = false
     # config.action_controller.permit_all_parameters = true 
 
     # Settings in config/environments/* take precedence over those specified here.
