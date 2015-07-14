@@ -10,6 +10,7 @@ module Railsblog
   class Application < Rails::Application
 
     config.assets.initialize_on_precompile = false
+    config.serve_static_assets = true
     # config.action_controller.permit_all_parameters = true 
 
     # Settings in config/environments/* take precedence over those specified here.
@@ -18,7 +19,7 @@ module Railsblog
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
+    config.time_zone = 'Central Time (US & Canada)'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
